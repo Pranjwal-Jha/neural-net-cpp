@@ -4,16 +4,13 @@
 #include <stdexcept>
 #include "randomizer.h"
 #include "activation.h"
-#include "matrix.h"
 int main(){
-    Matrix m1{4,3};
+    Matrix m1{4,3,1.0};
     m1.randomize();
     m1.PrintMat();
-    Matrix m2{3,4};
-    m2.randomize();
+    Matrix m2 = m1.Transpose();
     m2.PrintMat();
-    Matrix m3 = m1*m2;
-    m3.PrintMat();
     std::cout << std::endl;
     return 0;
 }
+// g++ main.cpp matrix.cpp activation.cpp -o main
