@@ -1,3 +1,5 @@
+#ifndef MATRIX_H
+#define  MATRIX_H
 #include <iostream>
 #include <vector>
 #include <random>
@@ -113,4 +115,10 @@ public:
     size_t GetCol() const{
         return cols;
     }
+    size_t GetSize() const{
+        return GetCol();
+    }
 };
+
+
+#endif
