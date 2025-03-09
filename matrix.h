@@ -20,6 +20,14 @@ public:
     {
         mat.resize(rows,std::vector<double>(cols,init_val));
     }
+    Matrix(const std::vector<std::vector<double>>& data){
+        if(data.empty()){
+            throw std::invalid_argument("Vector passed away is empty !");
+        }
+        mat = data;
+        rows = data.size();
+        cols = data[0].size();
+    }
     Matrix operator+(const Matrix& other) const{
         if(cols!=other.cols || rows!=other.rows){
             throw std::invalid_argument("Invalid Addition Between two Matrices");
