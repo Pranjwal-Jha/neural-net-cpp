@@ -4,7 +4,7 @@
 #include <math.h>
 #include <cmath>
 //ctrl k + z to wrap around
-namespace Loss{
+namespace LossBCE{
     double BCELoss(const Matrix& y_true,const Matrix& y_pred){
         if (y_true.GetRow()!=y_pred.GetRow() || y_true.GetCol()!=y_pred.GetCol()){
             throw std::invalid_argument("Error in file bceloss.h, Dimension of y_pred & y_true are not same");
