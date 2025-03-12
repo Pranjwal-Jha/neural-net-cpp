@@ -34,7 +34,9 @@ public:
             Matrix layer_output = curr_output*weights[i];
             for(size_t row=0;row<layer_output.GetRow();row++){
                 for(size_t col=0;col<layer_output.GetCol();col++){
-                    layer_output.at(row,col)+=bias[i].at(col,0);
+                    std::cout << "layer_output dims: " << layer_output.GetRow() << " x " << layer_output.GetCol() << std::endl;
+                    std::cout << "bias[" << i << "] dims: " << bias[i].GetRow() << " x " << bias[i].GetCol() << std::endl;
+                    layer_output.at(row,col)+=bias[i].at(col,0); //Erroring out here
                 }
             }
             layer_inputs.push_back(layer_output);
@@ -75,6 +77,34 @@ public:
             }
         }
         return loss;
+    }
+    void fit(const Matrix& input,const Matrix& target, size_t epochs,bool printLoss=true,size_t print_interval=100){
+        for(size_t epoch=0;epoch<epochs;epoch++){
+            double loss=train(input,target,false);
+            if(printLoss && (epoch%print_interval==0 || epoch==epochs-1)){
+                std::cout << "Epoch : " << epoch << " Loss : " << loss << std::endl;
+            }
+        }
+        if(printLoss && false){
+            Matrix finalPredictions=forward(input);
+            std::cout << "Final Prediction: " << std::endl;
+            finalPredictions.PrintMat();
+        }
+    }
+    double evaluate(const Matrix& input,const Matrix& target,double threshold=0.5){
+        Matrix predictions=forward(input);
+        int correct=0;
+        int total=input.GetRow()*target.GetCol();
+        for(size_t row=0;row<input.GetRow();row++){
+            for(size_t col=0;col<input.GetCol();col++){
+                bool prediction=predictions.at(row,col)>=threshold;
+                bool actual=target.at(row,col)>=threshold;
+                if(prediction==actual){
+                    correct++;
+                }
+            }
+        }
+        return static_cast<double>(correct)/total;
     }
 };
 #endif

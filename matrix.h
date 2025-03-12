@@ -22,7 +22,7 @@ public:
     }
     Matrix(const std::vector<std::vector<double>>& data){
         if(data.empty()){
-            throw std::invalid_argument("Vector passed away is empty !");
+            throw std::invalid_argument("Error in matrix.h ! Vector passed away is empty !");
         }
         mat = data;
         rows = data.size();
@@ -30,7 +30,7 @@ public:
     }
     Matrix operator+(const Matrix& other) const{
         if(cols!=other.cols || rows!=other.rows){
-            throw std::invalid_argument("Invalid Addition Between two Matrices");
+            throw std::invalid_argument("Error in matrix.h ! Invalid Addition Between two Matrices");
         }
         Matrix result(rows,cols,0.0);
         for(size_t i=0;i<rows;i++){
@@ -42,7 +42,7 @@ public:
     }
     Matrix operator-(const Matrix& other) const{
         if(cols!=other.cols || rows!=other.rows){
-            throw std::invalid_argument("Invalid Addition Between two Matrices");
+            throw std::invalid_argument("Error in matrix.h ! Invalid Addition Between two Matrices");
         }
         Matrix result(rows,cols,0.0);
         for(size_t i=0;i<rows;i++){
@@ -54,7 +54,7 @@ public:
     }
     Matrix operator*(const Matrix& other) const{
         if(cols!=other.rows){
-            throw std::invalid_argument("Invalid Multiplication between two Matrices");
+            throw std::invalid_argument("Error in matrix.h ! Invalid Multiplication between two Matrices");
         }
         Matrix result(rows,other.cols,0.0);
         for(size_t i=0;i<rows;i++){
@@ -76,7 +76,7 @@ public:
     }
     Matrix ele_wise_product(const Matrix& other)const{
         if(cols!=other.cols || rows!=other.rows){
-            throw std::invalid_argument("Invalid Addition Between two Matrices");
+            throw std::invalid_argument("Error in matrix.h ! Invalid Addition Between two Matrices");
         }
         Matrix result(rows,cols);
         for(size_t i=0;i<rows;i++){
@@ -106,13 +106,13 @@ public:
     }
     const double& at(size_t irow,size_t icol) const{
         if(irow>rows || icol>cols){
-            throw std::invalid_argument("Indices out of range!");
+            throw std::invalid_argument("Error in matrix.h ! Indices out of range!");
         }
         return mat[irow][icol];
     }
     double& at(size_t irow,size_t icol){
         if(irow>rows || icol>cols){
-            throw std::invalid_argument("Indices out of range!");
+            throw std::invalid_argument("Error in matrix.h ! Indices out of range!");
         }
         return mat[irow][icol];
     }

@@ -15,7 +15,7 @@ namespace LossBCE{
         for(size_t i=0;i<y_true.GetRow();i++){
             for(size_t j=0;j<y_true.GetCol();j++){
                 double pred=std::max(std::min(y_pred.at(i,j),1.0-epsilon),epsilon);
-                sum_loss+=-1.0*(y_true.at(i,j)*std::log(pred) + (1.0-y_true.at(i,j))*std::log(pred));
+                sum_loss+=-1.0*(y_true.at(i,j)*std::log(pred) + (1.0-y_true.at(i,j))*std::log(1.0-pred));
                 count++;
             }
         }
@@ -31,7 +31,7 @@ namespace LossBCE{
         for(size_t i=0;i<y_true.GetRow();i++){
             for(size_t j=0;j<y_true.GetCol();j++){
                 double pred=std::max(std::min(y_pred.at(i,j),1.0-epsilon),epsilon);
-                gradient.at(i,j)=-1.0*y_pred.at(i,j)/pred + (1.0-y_pred.at(i,j))/(1.0-pred);
+                gradient.at(i,j)=-1.0*y_true.at(i,j)/pred + (1.0-y_true.at(i,j))/(1.0-pred);
             }
         }
         double normalise_factor = 1.0/static_cast<double>(y_true.GetRow()*y_true.GetCol());
