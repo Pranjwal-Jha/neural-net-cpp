@@ -34,9 +34,7 @@ public:
             Matrix layer_output = curr_output*weights[i];
             for(size_t row=0;row<layer_output.GetRow();row++){
                 for(size_t col=0;col<layer_output.GetCol();col++){
-                    std::cout << "layer_output dims: " << layer_output.GetRow() << " x " << layer_output.GetCol() << std::endl;
-                    std::cout << "bias[" << i << "] dims: " << bias[i].GetRow() << " x " << bias[i].GetCol() << std::endl;
-                    layer_output.at(row,col)+=bias[i].at(col,0); //Erroring out here
+                    layer_output.at(row,col)+=bias[i].at(col,0);
                 }
             }
             layer_inputs.push_back(layer_output);
@@ -46,17 +44,24 @@ public:
         return curr_output;
     }
 
-    double train(const Matrix& input,const Matrix& output, bool printLoss=true){
+    double train(const Matrix& input,const Matrix& output, bool printLoss){
         Matrix prediction = forward(input);
+        // std::cout << "Passed first forward pass !" << std::endl;
         double loss=LossBCE::BCELoss(output,prediction);
-        if(printLoss){
+        // std::cout << "Passed BCELoss Calculation !" << std::endl;
+        if(printLoss){ //edit in the final push
             std::cout << "The Loss is : " << loss << std::endl;
         }
         Matrix gradient = LossBCE::BCEDerivative(output,prediction);
+        // std::cout << "Passed BCELossDerivative Calculation !" << std::endl;
         for(int i=weights.size()-1;i>=0;i--){
-            gradient=gradient.ele_wise_product(Activation::sigmoid_drv(layer_inputs[i]));
+            // std::cout << "Gradient Dimension : " << gradient.GetRow() << "," << gradient.GetCol() << " Layer input : " << i << " Size " << layer_inputs[i].GetRow() << "," << layer_inputs[i].GetCol() << std::endl;
+            gradient=gradient.ele_wise_product(Activation::sigmoid_drv(layer_inputs[i])); //erroring out here
+            // std::cout << "Passed element wise product Calculation !" << std::endl;
             Matrix weight_gradient = layer_outputs[i].Transpose()*gradient;
+            // std::cout << "Passed weight gradient Calculation !" << std::endl;
             Matrix bias_gradient(bias[i].GetRow(),bias[i].GetCol());
+            // std::cout << "Passed bias gradient Calculation !" << std::endl;
             for(size_t col=0;col<gradient.GetCol();col++){
                 double sum=0.0;
                 for(size_t row=0;row<gradient.GetRow();row++){
@@ -85,6 +90,7 @@ public:
                 std::cout << "Epoch : " << epoch << " Loss : " << loss << std::endl;
             }
         }
+        // std::cout << "Passed training phase !" << std::endl;
         if(printLoss && false){
             Matrix finalPredictions=forward(input);
             std::cout << "Final Prediction: " << std::endl;
@@ -94,9 +100,9 @@ public:
     double evaluate(const Matrix& input,const Matrix& target,double threshold=0.5){
         Matrix predictions=forward(input);
         int correct=0;
-        int total=input.GetRow()*target.GetCol();
-        for(size_t row=0;row<input.GetRow();row++){
-            for(size_t col=0;col<input.GetCol();col++){
+        int total=target.GetRow()*target.GetCol();
+        for(size_t row=0;row<target.GetRow();row++){
+            for(size_t col=0;col<target.GetCol();col++){
                 bool prediction=predictions.at(row,col)>=threshold;
                 bool actual=target.at(row,col)>=threshold;
                 if(prediction==actual){

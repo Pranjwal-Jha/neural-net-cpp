@@ -73,11 +73,11 @@ public:
                 mat[i][j] = unum(NRandom::mt);
             }
         }
-    }
-    Matrix ele_wise_product(const Matrix& other)const{
-        if(cols!=other.cols || rows!=other.rows){
-            throw std::invalid_argument("Error in matrix.h ! Invalid Addition Between two Matrices");
         }
+        Matrix ele_wise_product(const Matrix& other)const{
+            if(cols!=other.cols || rows!=other.rows){
+                throw std::invalid_argument("Error in matrix.h ! Invalid ele multiplication Between two Matrices");
+            }
         Matrix result(rows,cols);
         for(size_t i=0;i<rows;i++){
             for(size_t j=0;j<cols;j++){
@@ -125,6 +125,9 @@ public:
     }
     size_t GetSize() const{
         return GetCol();
+    }
+    std::pair<size_t,size_t> PrintSize() const{
+        return {GetRow(),GetCol()};
     }
 };
 

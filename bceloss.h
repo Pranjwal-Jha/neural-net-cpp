@@ -26,7 +26,7 @@ namespace LossBCE{
         if (y_true.GetRow()!=y_pred.GetRow() || y_true.GetCol()!=y_pred.GetCol()){
             throw std::invalid_argument("Error in file bceloss.h, Dimension of y_pred & y_true are not same");
         }
-        Matrix gradient(y_true.GetRow(),y_pred.GetRow());
+        Matrix gradient(y_true.GetRow(),y_true.GetCol());
         const double epsilon=1e-8;
         for(size_t i=0;i<y_true.GetRow();i++){
             for(size_t j=0;j<y_true.GetCol();j++){

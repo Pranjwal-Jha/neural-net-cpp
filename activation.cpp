@@ -32,6 +32,7 @@ namespace Activation{
     Matrix sigmoid_drv(const Matrix& input){
         Matrix s = sigmoid(input);
         Matrix ones(input.GetRow(),input.GetCol(),1.0);
+        // std::cout << "Sigmoid derivative completed !" << std::endl;
         return s.ele_wise_product(ones-s);
     }
 }
