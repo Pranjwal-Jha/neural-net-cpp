@@ -1,0 +1,29 @@
+# Ignore object files and compiled binaries
+*.o
+*.out
+*.exe
+
+# Ignore build and temporary files
+build/
+CMakeFiles/
+CMakeCache.txt
+*.log
+*.tmp
+
+# Ignore VSCode, JetBrains, or other IDE files
+.vscode/
+.idea/
+*.swp
+
+# Ignore dependency folders
+node_modules/
+__pycache__/
+
+# Ignore executable binary
+main
+
+# Ignore user specified files
+test.cpp
+matrix_re.h
+nn_test.cpp
+header.h
